@@ -25,6 +25,16 @@ app.get("/", (request, response) => {
   return response.status(234).send("Welcome to MERN Stack Book Shop");
 });
 
+// Health check endpoint  ← ADD HERE
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    service: 'mern-backend'
+  });
+});
+
 app.use("/books", booksRoute);
 
 mongoose

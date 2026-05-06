@@ -31,6 +31,11 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5555/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3  
 
   frontend:
     image: shivrajkale/mern-frontend:latest
@@ -50,3 +55,4 @@ volumes:
 networks:
   app-network:
     driver: bridge
+    
