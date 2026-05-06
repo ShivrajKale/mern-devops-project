@@ -17,7 +17,7 @@ Video Tutorial: https://www.youtube.com/watch?v=-42K44A1oMA&t=4s
 
 ## Screenshots
 
-![Home](image.png)
+![Homeeeeeeeeee](image.png)
 ![Card View](image-1.png)
 ![Create Book](image-2.png)
 ![Show Book](image-3.png)

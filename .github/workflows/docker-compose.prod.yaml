@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: bookstore
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: YOUR_DOCKERHUB_USERNAME/mern-backend:latest
+    container_name: backend
+    restart: always
+    ports:
+      - "5555:5555"
+    environment:
+      - MONGODBURL=mongodb://mongodb:27017/bookstore
+      - PORT=5555
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    image: YOUR_DOCKERHUB_USERNAME/mern-frontend:latest
+    container_name: frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
